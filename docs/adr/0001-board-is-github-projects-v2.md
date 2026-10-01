@@ -19,14 +19,14 @@ Projects v2 has a hard quirk: its *items* are issues, change proposals, or draft
 issues — **not repositories**. A repository cannot be a board item directly.
 
 An earlier decision also fixed **one board per mission**, so that missions never share
-state or concurrency.
+standings or concurrency.
 
 ## Decision
 
 Use **GitHub Projects v2**, and create **exactly one project per mission**. Because a
 repository cannot be an item, each target is represented by a **tracking issue** in the
 control repo, and that issue is the target's entry on the board. The board's fields
-carry the machine-readable state: `Standing`, `Target`, `Mission`, `Match`,
+carry the machine-readable fields: `Standing`, `Target`, `Mission`, `Match`,
 `ChangeProposal`, `Attempts`, `CostUSD`, `Claim`, `ClaimedAt`. Transition rules are
 enforced in the Board Controller, never in prompts.
 

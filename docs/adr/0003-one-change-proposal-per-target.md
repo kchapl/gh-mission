@@ -13,8 +13,8 @@ how the work is packaged, and how much autonomy the system has.
 - **Packaging:** one batched change across repositories, or one change per repository?
 - **Autonomy:** merge automatically, or hold every change for a human?
 
-A batch couples unrelated repositories: one failing build blocks the rest, and a
-rollback is all-or-nothing. Full autonomy across a fleet of repositories is a blast
+One change spanning many repositories couples them: a single failing build blocks the
+rest, and a rollback is all-or-nothing. Full autonomy across a fleet of repositories is a blast
 radius we were not willing to accept before seeing the system work.
 
 ## Decision
@@ -36,5 +36,6 @@ the diff.
 - Review load scales linearly with the target count; the feasibility report must
   therefore **lead with the target count** so the operator sees the load before
   approving.
-- More change proposals and CI churn than a batch would produce.
+- More change proposals and CI churn than one change spanning every repository would
+  produce.
 - Autonomy is deliberately left on the table for v1, to be earned later.

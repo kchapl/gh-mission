@@ -1,8 +1,8 @@
 # Mission Runner — Design
 
-A system of **supervisor**, **explorer**, and **actor** agents that operate over a
-collection of repositories. An **operator** states an **intent**; the system clarifies
-it by structured **interrogation**, turns it into a machine-checkable
+A system of **elicitor**, **supervisor**, **explorer**, and **actor** agents that operate
+over a collection of repositories. An **operator** states an **intent**; the system
+clarifies it by structured **interrogation**, turns it into a machine-checkable
 **specification**, discovers matching repositories onto a GitHub Projects v2 **board**,
 and performs the same **task** on every **target** — producing one **change proposal**
 per target, except where none is needed.
@@ -285,8 +285,8 @@ lease permit it.
 ## 5. Data model
 
 The specification is committed to the control repo under `missions/<mission-id>/` so
-every mission is reproducible and version-pinned. It is one specification made of two
-files.
+every mission is reproducible and pinned to its frozen specification. It is one
+specification made of two files.
 
 ### 5.1 Exploration specification (`explorer.yaml`)
 ```yaml
@@ -468,7 +468,7 @@ pause flag.
 
 ```
 search_budget      = search_headroom_per_min * tick_minutes
-explorations       = min(spec.partition.max_partitions,
+explorations       = min(specification.partition.max_partitions,
                          ceil(estimated_candidates / candidates_per_exploration),
                          search_budget / search_calls_per_exploration)
 
@@ -694,7 +694,7 @@ Mechanics:
   issue comment updated each tick.
 - **Metrics:** targets by standing, throughput (change proposals/day), success rate per
   attempt, escalation rate, search-quota utilization, mean wall-clock per action.
-- **Dashboards:** a generated Markdown status section on the mission issue is enough
+- **Dashboards:**  a generated Markdown summary section on the mission issue is enough
   for v1; a Projects view grouped by `Standing` covers the rest.
 
 ### 13.1 Supervision session log
@@ -749,7 +749,7 @@ src/
     supervisor.ts
     elicitor.ts
   sessions/           # per-mission supervision session logs (§13.1)
-  schemas/            # zod schemas for specs and tool I/O
+  schemas/            # zod schemas for specifications and tool I/O
 missions/<id>/{explorer.yaml,actor.yaml}
 models.yaml           # tier -> provider/model map
 fixtures/             # synthetic data for the worked example (§17)
@@ -761,7 +761,7 @@ docs/adr/             # architecture decision records
 
 ---
 
-## 15. Open questions
+## 15. Decisions and open questions
 
 Settled across the four interrogation rounds: autonomy (operator approves the
 specification and merges every draft change proposal); target scope (own orgs, same-repo
@@ -885,6 +885,10 @@ adaptation:
 limits:
   max_attempts: 2
   max_files_changed: 3
+retry:
+  transient: [secondary_rate_limit, server_error, runner_lost, network_timeout]
+  max_transient_retries: 3
+  backoff_cap_minutes: 5
 escalation:
   on_failure: escalate_model
   on_existing_pr: needs_human

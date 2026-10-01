@@ -1,9 +1,9 @@
 # Mission Runner
 
-A system of **supervisor**, **explorer**, and **actor** agents that carry one kind of
-work across many repositories. An operator states an intent; the system clarifies it by
-structured interrogation, discovers the repositories that belong to the mission, and
-performs the same task on each — one change proposal per repository.
+A system of **elicitor**, **supervisor**, **explorer**, and **actor** agents that carry
+one kind of work across many repositories. An operator states an intent; the system
+clarifies it by structured interrogation, discovers the repositories that belong to the
+mission, and performs the same task on each — one change proposal per repository.
 
 **Status: design complete, ready for implementation.** There is no code yet; this repo
 is the design, its glossary, its decisions, and the fixtures for its first test.
@@ -34,8 +34,8 @@ short version:
   done), **Explorer** (finds repositories), and **Actor** (does the work).
 - **Exploration** finds **candidates**; **qualification** promotes them to **targets**.
   **Action** performs the **task** on a target and produces a **change proposal**.
-- **Reconnaissance** is exploration with no action — the read-only dry run that
-  produces a **feasibility report** before anything is spent.
+- **Reconnaissance** is exploration with no action — the read-only sweep that produces
+  a **feasibility report** before anything is spent.
 
 ---
 

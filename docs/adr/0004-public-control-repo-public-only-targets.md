@@ -12,11 +12,10 @@ workflows, the board (tracking issues), and the **session logs** — verbatim re
 traces that may quote repository content. Its visibility therefore decides the
 visibility of all of that.
 
-A **public** control repo is simple and transparent, but a public board and public
-session logs about a *private* target repository would leak that repository's existence,
-its file contents, and reasoning about it. The requirement that session logs be readable
-"only to mission operators" is incompatible with a public repo unless the targets
-themselves are public.
+A **public** control repo is simple and transparent, but it makes the board and the
+session logs public too — and the session logs carry verbatim reasoning that may quote
+repository content. If a target repository were private, a public control repo would
+leak its existence, its contents, and reasoning about it.
 
 ## Decision
 
